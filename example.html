@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--声明使用标准盒子模型-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CaaT Example</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="CaaT.js"></script>
+</head>
+
+<script type="text/javascript">
+    function formatNumber(num) {
+        var str = "" + num;
+        var e = str.indexOf('.');
+        if (e < 0) {
+            e = str.length;
+        } else {
+            ++e;
+        }
+
+        while ((e = e - 3) > 0) {
+            str = str.substring(0, e) + ',' + str.substr(e);
+        }
+        return str;
+    }
+
+    $(document).ready(function(e) {
+        caat_init("#explame1");
+        caat_init("#explame2");
+        caat_init("#explame3");
+        caat_init("#explame4");
+
+        data = ["aa", "bb", "cc"];
+        html = caat_loopInvoke('#explame1', data);
+        $('#explame1').html(html);
+
+        data = [{
+            key: "k1",
+            value: 10000
+        }, {
+            key: "k2",
+            value: 20000
+        }, {
+            key: "k3",
+            value: 30000
+        }];
+        html = caat_loopInvoke('#explame2', data);
+        $('#explame2').html(html);
+
+        html = caat_loopInvoke('#explame3', data);
+        $('#explame3').html(html);
+
+        data = [{
+            name: 'Level1_1',
+            sub: [{
+                name: 'Level2_1.1'
+            }, {
+                name: 'Level2_1.2'
+            }]
+        }, {
+            name: 'Level1_2',
+            sub: [{
+                name: 'Level2_2.1'
+            }, {
+                name: 'Level2_2.2'
+            }]
+        }, {
+            name: 'Level1_3',
+            sub: [{
+                name: 'Level3_3.1'
+            }, {
+                name: 'Level3_3.2'
+            }]
+        }, ];
+        html = caat_loopInvoke('#explame4', data);
+        $('#explame4').html(html);
+    });
+</script>
+
+<body>
+    <div id="explame1">
+        <!--%LoopTemplate%
+            <span>{:i+1},{$$}</span><br />
+        %EndLoop%-->
+    </div>
+    <br />
+    <div id="explame2">
+        <!--%LoopTemplate%
+            <span>{:i+1},{key}={value}</span><br />
+        %EndLoop%-->
+    </div>
+    <br />
+    <div id="explame3">
+        <!--%LoopTemplate%
+            <span>{:i+1},{key}={:formatNumber($value$)}</span><br />
+        %EndLoop%-->
+    </div>
+    <br />
+    <ul id="explame4">
+        <!--%LoopTemplate%
+            <li>
+                <span>{name}</span>
+                <ul>
+                    %LoopTemplate[L2](sub)%
+                    <li>
+                        <span>{name}</span>
+                    </li>
+                    %EndLoop[L2]%
+                </ul>
+            </li>
+        %EndLoop%-->
+    </ul>
+</body>
