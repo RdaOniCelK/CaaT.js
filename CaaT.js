@@ -1,3 +1,8 @@
+/**
+ * CaaT.js
+ * Comment as a Template 注释即模板
+ * http://git.oschina.net/rdaonicelk/CaaT
+ */
 function _caat_tmplTxtFilter(str) {
     var s, e;
     s = str.indexOf("<!--%LoopTemplate%");
